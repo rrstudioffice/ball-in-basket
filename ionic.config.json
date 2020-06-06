@@ -1,0 +1,7 @@
+{
+  "name": "Ball in Basket",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
