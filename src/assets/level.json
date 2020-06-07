@@ -1,0 +1,43 @@
+{
+  "levels": [
+    {
+      "velocity": 100,
+      "time": 5000,
+      "balls": {
+        "colors": ["red"],
+        "lines": [0, 1, 2, 3, 4],
+        "amount": 10
+      },
+      "baskets": {
+        "lines": [0, 1, 2, 3, 4],
+        "colors": ["red", "yellow", "blue", "green", "pink"]
+      }
+    },
+    {
+      "velocity": 100,
+      "time": 3000,
+      "balls": {
+        "colors": ["red"],
+        "lines": [1, 3],
+        "amount": 5
+      },
+      "baskets": {
+        "lines": [2],
+        "colors": ["red"]
+      }
+    },
+    {
+      "velocity": 1000,
+      "time": 3000,
+      "balls": {
+        "colors": ["red"],
+        "lines": [2],
+        "amount": 6
+      },
+      "baskets": {
+        "lines": [2],
+        "colors": ["red", "blue"]
+      }
+    }
+  ]
+}

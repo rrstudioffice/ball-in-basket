@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "rrstudioffice-bib": {
+      "hosting": {
+        "app": [
+          "rrstudioffice-bib"
+        ]
+      }
+    }
+  }
+}

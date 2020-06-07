@@ -64,3 +64,5 @@ import 'zone.js/dist/zone';  // Included with Angular CLI.
 /***************************************************************************************************
  * APPLICATION IMPORTS
  */
+// Phaser 3 dist build attaches API to the global window object.
+import 'phaser/dist/phaser';

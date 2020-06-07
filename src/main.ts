@@ -10,3 +10,7 @@ if (environment.production) {
 
 platformBrowserDynamic().bootstrapModule(AppModule)
   .catch(err => console.log(err));
+
+// tslint:disable-next-line: no-string-literal
+(window as any)['global'] = window;
+

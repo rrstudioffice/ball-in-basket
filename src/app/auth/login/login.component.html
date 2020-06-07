@@ -1,0 +1,112 @@
+<ion-content>
+  <ion-grid class="ion-no-padding">
+    <ion-row>
+      <ion-col size="12" size-sm="6" offset-sm="3" size-md="6" offset-md="3">
+        <!-- <img class="image-logo" src="assets/imgs/logo.png" /> -->
+        <h3 class="ion-text-center" *ngIf="configs.isSignIn">Acessar <b>Minha conta</b></h3>
+        <h3 class="ion-text-center" *ngIf="!configs.isSignIn">Abrir <b>Uma nova conta</b></h3>
+        <ion-card class="ion-no-padding">
+          <form [formGroup]="form" (ngSubmit)="save(authProviders.Email)">
+            <ion-item>
+              <ion-label position="floating">E-mail</ion-label>
+              <ion-input type="email" formControlName="email"></ion-input>
+              <ion-note color="danger" slot="end" *ngIf="email.invalid && email.dirty">
+                <span *ngIf="email.getError('required')">Obrigatório</span>
+                <span *ngIf="email.getError('email')">E-mail válido</span>
+              </ion-note>
+            </ion-item>
+            <ion-item
+              lines="full"
+              *ngIf="email.invalid && email.dirty && email.getError('emailTaken')"
+            >
+              <ion-label>
+                <h2>Email</h2>
+                <p>Já registrado</p>
+              </ion-label>
+            </ion-item>
+            <ion-item lines="full" *ngIf="email.pending">
+              <ion-label>
+                <h2>Verificando a disponibilidade de</h2>
+                <p>{{ email.value }}</p>
+              </ion-label>
+              <ion-spinner name="bubbles" slot="end"></ion-spinner>
+            </ion-item>
+
+            <!-- REPEAT EMAIL -->
+            <ng-container *ngIf="!configs.isSignIn">
+              <ion-item>
+                <ion-label position="floating">Repetir E-mail</ion-label>
+                <ion-input
+                  type="email"
+                  formControlName="repeatEmail"
+                  appEqualValidator="email"
+                ></ion-input>
+                <ion-note
+                  color="danger"
+                  slot="end"
+                  *ngIf="repeatEmail.invalid && repeatEmail.dirty"
+                >
+                  <span *ngIf="repeatEmail.getError('required')">
+                    Obrigatório
+                  </span>
+                  <span
+                    *ngIf="repeatEmail.getError('notEqual') && !repeatEmail.getError('required')"
+                  >
+                    Não confere
+                  </span>
+                </ion-note>
+              </ion-item>
+            </ng-container>
+            <ion-item>
+              <ion-label position="floating">Senha</ion-label>
+              <ion-input type="password" formControlName="password"></ion-input>
+              <ion-note color="danger" slot="end" *ngIf="password.invalid && password.dirty">
+                <span *ngIf="password.getError('required')">Obrigatório</span>
+                <span *ngIf="password.getError('minlenght') && !password.getError('required')">
+                  Mínimo 6 caracteres
+                </span>
+              </ion-note>
+            </ion-item>
+            <!-- REPEAT PASSWORD -->
+            <ng-container *ngIf="!configs.isSignIn">
+              <ion-item>
+                <ion-label position="floating">Repetir senha</ion-label>
+                <ion-input
+                  type="password"
+                  formControlName="repeatPassword"
+                  appEqualValidator="password"
+                ></ion-input>
+                <ion-note
+                  color="danger"
+                  slot="end"
+                  *ngIf="repeatPassword.invalid && repeatPassword.dirty"
+                >
+                  <span *ngIf="repeatPassword.getError('required')">Obrigatório</span>
+                  <span
+                    *ngIf="
+                      repeatPassword.getError('notEqual') && !repeatPassword.getError('required')
+                    "
+                    >Não confere</span
+                  >
+                </ion-note>
+              </ion-item>
+            </ng-container>
+            <ion-button size="small" expand="block" type="submit" [disabled]="!form.valid">
+              {{ configs.action }}
+            </ion-button>
+          </form>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12" size-sm="6" offset-sm="3" size-md="6" offset-md="3">
+        <ion-button color="light" expand="block" size="small" (click)="changeAuthAction()">
+          {{ configs.actionChange }}
+        </ion-button>
+        <ion-button color="light" expand="block" size="small" routerLink="/auth/forgot">
+          Recuperar minha senha
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

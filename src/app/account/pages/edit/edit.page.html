@@ -1,0 +1,84 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Editar conta</ion-title>
+    <ion-buttons slot="end">
+      <ion-button size="small" expand="full" [disabled]="form.invalid" (click)="save()">
+        Concluir
+      </ion-button>
+      <ion-menu-button menu="account"></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="form">
+    <ion-grid>
+      <ion-row>
+        <ion-col size-xl="6" size-lg="6" size-md="6" size-sm="12" size-xs="12">
+          <ion-item color="light" lines="full">
+            <ion-label class="ion-text-center">
+              Informação Básica
+            </ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">
+              Nome
+            </ion-label>
+            <ion-input
+              type="text"
+              formControlName="firstname"
+              style="text-transform: capitalize;"
+            ></ion-input>
+            <ion-note
+              color="danger"
+              slot="end"
+              *ngIf="firstname.invalid && (firstname.dirty && firstname.touched)"
+            >
+              <span *ngIf="firstname.getError('required')">
+                Obrigatório
+              </span>
+              <span *ngIf="firstname.getError('minlenght')">
+                Mínimo 4 caracteres
+              </span>
+            </ion-note>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">
+              Sobrenome
+            </ion-label>
+            <ion-input
+              type="text"
+              formControlName="lastname"
+              style="text-transform: capitalize;"
+            ></ion-input>
+            <ion-note
+              color="danger"
+              slot="end"
+              *ngIf="lastname.invalid && (lastname.dirty && lastname.touched)"
+            >
+              <span *ngIf="lastname.getError('required')">
+                Obrigatório
+              </span>
+              <span *ngIf="lastname.getError('minlenght')">
+                Mínimo 4 caracteres
+              </span>
+            </ion-note>
+          </ion-item>
+
+          <ion-item lines="full">
+            <ion-label *ngIf="form.value.gender">
+              Masculino
+            </ion-label>
+            <ion-label *ngIf="!form.value.gender">
+              Feminino
+            </ion-label>
+            <ion-toggle formControlName="gender"></ion-toggle>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
+</ion-content>
