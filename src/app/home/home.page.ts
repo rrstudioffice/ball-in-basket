@@ -16,6 +16,7 @@ import * as Phaser from 'phaser';
 })
 export class HomePage implements OnInit, OnDestroy {
   config: Phaser.Types.Core.GameConfig;
+  music: Phaser.Sound.BaseSound;
   storage: StorageService;
   game: Phaser.Game;
 
@@ -31,7 +32,7 @@ export class HomePage implements OnInit, OnDestroy {
       },
       physics: {
         default: 'arcade',
-        arcade: { debug: true }
+        // arcade: { debug: true }
       },
       scene: [BootScene, PreloaderScene, MenuScene, BoxScene, OptionScene, GameScene]
     };
@@ -40,8 +41,8 @@ export class HomePage implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.storage.getObject('ball_in_basket').then(value => {
-      const objGame = value;
       this.game = new Phaser.Game(this.config);
+      const objGame = value;
       this.game.registry.merge(Object.assign(objGame));
     });
   }

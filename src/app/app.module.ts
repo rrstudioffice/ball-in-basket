@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
+import { AppRoutingModule } from './app-routing.module';
 import { RouteReuseStrategy } from '@angular/router';
 import { AppComponent } from './app.component';
 // NATIVES
@@ -14,6 +15,7 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
     BrowserModule,
     HttpClientModule,
     IonicModule.forRoot(),
+    AppRoutingModule
   ],
   providers: [
     StatusBar,

@@ -10,6 +10,7 @@ export class GameScene extends Phaser.Scene {
   cursors: Phaser.Types.Input.Keyboard.CursorKeys;
   gameOverText: Phaser.GameObjects.Text;
   scoreText: Phaser.GameObjects.Text;
+  bubble: Phaser.Sound.BaseSound;
   game: Phaser.Game;
 
   worldModel: World;

@@ -10,11 +10,17 @@ export class OptionScene extends Phaser.Scene {
   create() {
     const bg = this.add.image(0, 700, 'bg_0');
     bg.setOrigin(0, 1);
-
     const width = (this.sys.game.canvas.width / 2);
     const height = (this.sys.game.canvas.height / 2);
+    const music: Phaser.Sound.BaseSound = this.registry.get('music');
     const btnPlayAgain = new Button({
-      callback: () => { },
+      callback: () => {
+        if (music.isPlaying) {
+          this.sound.mute = true;
+        } else {
+          this.sound.mute = false;
+        }
+      },
       y: height - 100,
       txt: 'Música',
       scene: this,

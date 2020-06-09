@@ -7,6 +7,8 @@ export class PreloaderScene extends Phaser.Scene {
 
   preload() {
     this.load.setPath('./assets/');
+    this.load.audio('music', ['sounds/music.ogg', 'sounds/music.mp3']);
+    this.load.audio('bubble', ['sounds/bubble.ogg', 'sounds/bubble.mp3']);
     // LEVELS
     this.load.json('level', 'level.json');
     // GUI BUTTONS

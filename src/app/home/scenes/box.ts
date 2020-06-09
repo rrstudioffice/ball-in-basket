@@ -47,10 +47,10 @@ export class BoxScene extends Phaser.Scene {
       txt: 'Jogar', scene: this, x: w / 2, y: h / 2
     });
     // IR PARA O MENU
-    const btnMenu = new Button({
-      callback: () => this.scene.start('menu'),
-      txt: 'Menu', scene: this, x: w / 2, y: h / 2 + 80
-    });
+    // const btnMenu = new Button({
+    //   callback: () => this.scene.start('menu'),
+    //   txt: 'Menu', scene: this, x: w / 2, y: h / 2 + 80
+    // });
   }
 
 }
