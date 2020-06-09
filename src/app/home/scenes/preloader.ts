@@ -9,16 +9,16 @@ export class PreloaderScene extends Phaser.Scene {
     this.load.setPath('./assets/');
     // LEVELS
     this.load.json('level', 'level.json');
-    this.load.image('baseLvl', 'imgs/Level.png');
-    for (let i = 2; i < 10; i++) {
-      this.load.image(`lvl${i}`, `imgs/${i}.png`);
-    }
+    // GUI BUTTONS
+    this.load.atlas('button', 'gui/button.png', 'gui/button.json');
     // BALLS
     this.load.atlas('ball', 'balls.png', 'balls.json');
     // PLAYER
     this.load.atlas('baskets', 'baskets.png', 'baskets.json');
     // BACKGROUNDS
-    this.load.image('bg', 'bg.jpg');
+    this.load.image('bg_0', 'bgs/bg_0.png');
+    this.load.image('bg_1', 'bgs/bg_1.png');
+    this.load.image('floor_1', 'bgs/floor_1.png');
   }
 
   create() {

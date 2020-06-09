@@ -17,7 +17,7 @@ export class Player extends Phaser.GameObjects.Container {
     this.lines = [w - 128, w - 64, w, w + 64, w + 128];
     levelGame.baskets.colors.forEach((basket, i) => {
       const line = levelGame.baskets.lines[i];
-      this.baskets.push(new Basket(scene, this.lines[line], 0, basket));
+      this.baskets.push(new Basket(scene, this.lines[line], -100, basket));
     });
     this.add(this.baskets);
   }

@@ -3,6 +3,7 @@ export interface IMap {
 }
 
 export interface IMapLevel {
+  level: number;
   baskets: {
     lines: number[];
     colors: string[]

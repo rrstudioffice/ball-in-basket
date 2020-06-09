@@ -2,26 +2,34 @@ import * as Phaser from 'phaser';
 import { Ball } from './ball';
 
 import { IMap, IMapLevel } from '../interface';
+import { Background } from './background';
 
 export class World extends Phaser.GameObjects.Image {
   private lines: any[] = [];
   private nextBall: number;
   private mapLevel: IMap;
   // PUBLICS
+  floor: Phaser.Physics.Arcade.Sprite;
   balls: Phaser.Physics.Arcade.Group;
   levelGame: IMapLevel;
+  bg: Phaser.GameObjects.TileSprite;
 
   constructor(scene: Phaser.Scene, nLvl: number) {
-    super(scene, 0, 0, 'bg');
+    super(scene, 0, 0, 'bg_1');
+    scene.add.existing(this);
+    this.setOrigin(0, 0);
     const w = scene.sys.canvas.width / 2;
+    const h = scene.sys.canvas.height;
     this.mapLevel = scene.cache.json.get('level');
     this.levelGame = this.mapLevel.levels[nLvl];
+    // BALLS
     this.balls = scene.physics.add.group({ classType: Ball, runChildUpdate: true });
+
+    // FLOOR
+    this.floor = scene.physics.add.staticSprite(1050 / 2, 595, 'floor_1');
+    this.floor.setOffset(0, 80);
     this.lines = [w - 128, w - 64, w, w + 64, w + 128];
     this.nextBall = 0;
-    this.setOrigin(0.5, 0);
-    this.setScale(0.93, 0.93);
-    scene.add.existing(this);
   }
 
   preUpdate(time) {
@@ -37,6 +45,7 @@ export class World extends Phaser.GameObjects.Image {
       const line = Phaser.Utils.Array.GetRandom(this.levelGame.balls.lines);
       ball.setX(this.lines[line]);
       const frame = Phaser.Utils.Array.GetRandom(this.levelGame.balls.colors);
+      ball.setFrame(frame);
       ball.setName(frame);
       if (ball) {
         ball.setActive(true);

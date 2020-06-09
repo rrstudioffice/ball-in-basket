@@ -19,8 +19,8 @@ export class StorageService {
     return await Storage.set(item);
   }
 
-  async getItem(key: string) {
-    const { value } = await Storage.get({ key: 'name' });
+  async getItem(key) {
+    const { value } = await Storage.get(key);
     return value;
   }
 

@@ -1,4 +1,3 @@
-import { StorageService } from '../services/storage.service';
 import { Header } from '../models/header';
 import { Player } from '../models/player';
 import { Basket } from '../models/basket';
@@ -11,9 +10,6 @@ export class GameScene extends Phaser.Scene {
   cursors: Phaser.Types.Input.Keyboard.CursorKeys;
   gameOverText: Phaser.GameObjects.Text;
   scoreText: Phaser.GameObjects.Text;
-  db: firebase.firestore.Firestore;
-  auth: firebase.auth.Auth;
-  storage: StorageService;
   game: Phaser.Game;
 
   worldModel: World;
@@ -28,25 +24,20 @@ export class GameScene extends Phaser.Scene {
   }
 
   create() {
-    this.config = this.registry.getAll();
-    this.header = new Header(this);
-    this.worldModel = new World(this, this.config.level || 1);
-    this.player = new Player(this, 1);
-    this.physics.world.setBoundsCollision(true);
-    // CONTROLS
     const w = this.sys.canvas.width;
     const h = this.sys.canvas.height;
+    this.physics.world.setBoundsCollision(true);
+    this.physics.world.setBounds(0, 0, w, h - 50);
+    this.config = this.registry.getAll();
+    this.worldModel = new World(this, this.config.level);
+    this.header = new Header(this, this.worldModel.levelGame.balls.amount, this.config.level);
+    this.player = new Player(this, this.config.level);
+    // CONTROLS
     this.cursors = this.input.keyboard.createCursorKeys();
+    // Contato da bola com o CHÃO
+    this.physics.add.overlap(this.worldModel.balls, this.worldModel.floor, this.gameOver, null, this);
+    // CONTATO DA BOLA COM A CESTA
     this.physics.add.overlap(this.player.baskets, this.worldModel.balls, this.collectBall, null, this);
-
-    const ballAll = this.worldModel.levelGame.balls.amount;
-    this.scoreText = this.add.text(w / 2, 16, 'Bolas: 0 / ' + ballAll, { fontSize: '32px', fill: '#000' });
-    this.scoreText.setOrigin(0.5, 0.5);
-    this.gameOverText = this.add.text(w / 2, h / 2, 'GAME OVER', {
-      fontSize: '40px', fill: '#000'
-    });
-    this.gameOverText.setVisible(false);
-    this.gameOverText.setOrigin(0.5, 0.5);
   }
 
   collectBall(basket: Basket, ball: Ball) {
@@ -54,7 +45,7 @@ export class GameScene extends Phaser.Scene {
       // CONTINUA O JOGO se cesta for mesma cor que a bola
       if (basket.name === ball.name) {
         const ballAll = this.worldModel.levelGame.balls.amount;
-        this.scoreText.setText(`Bolas: ${this.score += 1} / ${ballAll}`);
+        this.header.scoreText.setText(`Bolas: ${this.score += 1} / ${ballAll}`);
         ball.setActive(false);
         ball.setVisible(false);
         ball.destroy();
@@ -62,35 +53,55 @@ export class GameScene extends Phaser.Scene {
         this.gameOver();
       }
 
+      // BOLA ENCOSTAR NO CHAO GAME OVER
+      if (ball.y > this.sys.canvas.height - 50) {
+        this.gameOver();
+      }
+
       if (this.score === this.worldModel.levelGame.balls.amount) {
         // APARECE UMA BOX COM O STAGE COMPLETE
-        this.scene.pause();
-        // this.goToMenu();
+        this.scene.restart();
+        this.goToBox();
       }
     }
   }
 
   update(time) {
+    this.worldModel.update(time);
     if (this.player.getData('notMoving')) {
       // this.playerModel.setVelocity(0);
       if (this.cursors.left.isDown) {
-        this.worldModel.x -= 10;
+        // this.worldModel.x -= 10;
         this.player.setfixedMovement(64, 'left');
       } else if (this.cursors.right.isDown) {
-        this.worldModel.x += 10;
+        // this.worldModel.x += 10;
         this.player.setfixedMovement(64, 'right');
       }
     }
   }
 
   // CONCLUIR A FASE
-  private async goToMenu() {
+  private goToBox() {
+    this.score = 0;
     this.registry.merge({ level: this.config.level + 1 });
+    this.scene.start('box', {
+      pageTitle: 'Level ' + this.config.level,
+      levelFinish: 'Completo!',
+      level: this.config.level + 1
+    });
+  }
+
+  private async goToMenu() {
     this.scene.start('menu');
+    this.score = 0;
   }
 
   private gameOver() {
-    this.gameOverText.visible = true;
     this.scene.pause();
+    this.score = 0;
+    this.scene.start('box', {
+      pageTitle: 'Game Over!',
+      level: this.config.level
+    });
   }
 }

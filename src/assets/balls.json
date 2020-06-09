@@ -1,28 +1,44 @@
 {
-  "height": 128,
-  "width": 640,
-  "tileheight": 128,
-  "tilewidth": 128,
+  "height": 48,
+  "width": 432,
+  "tileheight": 48,
+  "tilewidth": 48,
   "frames": [
     {
+      "filename": "white",
+      "frame": { "x": 0, "y": 0, "w": 48, "h": 48 }
+    },
+    {
+      "filename": "orange",
+      "frame": { "x": 48, "y": 0, "w": 48, "h": 48 }
+    },
+    {
       "filename": "red",
-      "frame": { "x": 0, "y": 0, "w": 128, "h": 128 }
-    },
-    {
-      "filename": "blue",
-      "frame": { "x": 128, "y": 0, "w": 128, "h": 128 }
-    },
-    {
-      "filename": "green",
-      "frame": { "x": 256, "y": 0, "w": 128, "h": 128 }
+      "frame": { "x": 96, "y": 0, "w": 48, "h": 48 }
     },
     {
       "filename": "yellow",
-      "frame": { "x": 384, "y": 0, "w": 128, "h": 128 }
+      "frame": { "x": 144, "y": 0, "w": 48, "h": 48 }
+    },
+    {
+      "filename": "green",
+      "frame": { "x": 192, "y": 0, "w": 48, "h": 48 }
+    },
+    {
+      "filename": "blue_white",
+      "frame": { "x": 240, "y": 0, "w": 48, "h": 48 }
+    },
+    {
+      "filename": "blue",
+      "frame": { "x": 288, "y": 0, "w": 48, "h": 48 }
     },
     {
       "filename": "pink",
-      "frame": { "x": 512, "y": 0, "w": 128, "h": 128 }
+      "frame": { "x": 336, "y": 0, "w": 48, "h": 48 }
+    },
+    {
+      "filename": "black",
+      "frame": { "x": 384, "y": 0, "w": 48, "h": 48 }
     }
   ]
 }
