@@ -16,9 +16,9 @@ export class PreloaderScene extends Phaser.Scene {
     this.load.atlas('btnBlue', 'gui/btnBlue.png', 'gui/btnBlue.json');
     this.load.atlas('arrow', 'gui/arrow.png', 'gui/arrow.json');
     // PLAYER
-    this.load.atlas('baskets', 'baskets.png', 'baskets.json');
+    this.load.atlas('baskets', 'sprites/baskets.png', 'sprites/baskets.json');
     // BALLS
-    this.load.atlas('ball', 'balls.png', 'balls.json');
+    this.load.atlas('ball', 'sprites/balls.png', 'sprites/balls.json');
     // LEVELS
     this.load.json('level', 'level.json');
     // BACKGROUNDS
