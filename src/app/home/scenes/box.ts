@@ -6,9 +6,9 @@ import { Button } from '../models/button';
 export class BoxScene extends Phaser.Scene {
   pageTitle: string;
   finish: string;
-  level: number;
   sizeW = 600;
   sizeH = 400;
+  level = 0;
 
   constructor() {
     super({ key: 'box', active: false });
@@ -16,18 +16,17 @@ export class BoxScene extends Phaser.Scene {
 
   init(data) {
     const storage = new StorageService();
+    storage.setObject('ball_in_basket', { level: data.level });
     this.pageTitle = data.pageTitle;
-    this.level = data.level;
     this.finish = data.levelFinish;
-    storage.setItem({ key: 'level', value: data.level });
+    this.level = data.level;
   }
 
   create() {
-    const bg = this.add.image(0, 700, 'bg_0');
-    bg.setOrigin(0, 1);
-
     const w = this.sys.canvas.width;
     const h = this.sys.canvas.height;
+    const bg = this.add.image(w / 2, h, 'bg_0');
+    bg.setOrigin(0.5, 1);
     // TITULO
     const titleText = this.add.text(w / 2, h / 2 - 100, this.pageTitle, {
       fontFamily: 'Piedra-Regular',
@@ -46,9 +45,9 @@ export class BoxScene extends Phaser.Scene {
     finishText.setOrigin(0.5, 0.5);
     this.add.existing(finishText);
 
-    // JOGAR DE NOVO
-    const btnPlayAgain = new Button({
-      callback: () => this.scene.start('game', { level: this.level }),
+    /** JOGAR */
+    const btnPlay = new Button({
+      callback: () => this.scene.start('game'),
       txt: 'Jogar', scene: this, x: w / 2, y: h / 2
     });
     // IR PARA O MENU

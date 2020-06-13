@@ -16,18 +16,20 @@ export class World extends Phaser.GameObjects.Image {
   constructor(scene: Phaser.Scene, nLvl: number) {
     super(scene, 0, 0, 'bg_1');
     scene.add.existing(this);
-    this.setOrigin(0, 0);
     const w = this.scene.sys.canvas.width / 2;
     const h = this.scene.sys.canvas.height;
+    this.setOrigin(0.5, 1);
+    this.setPosition(w, h);
+    this.lines = [w - 128, w - 64, w, w + 64, w + 128];
     this.mapLevel = this.scene.cache.json.get('level');
     this.levelGame = this.mapLevel.levels[nLvl];
     // BALLS
     this.balls = this.scene.physics.add.group({ classType: Ball, runChildUpdate: true });
 
     // FLOOR
-    this.floor = this.scene.physics.add.staticSprite(1050 / 2, 595, 'floor_1');
-    this.floor.setOffset(0, 80);
-    this.lines = [w - 128, w - 64, w, w + 64, w + 128];
+    this.floor = this.scene.physics.add.staticSprite(w, h, 'floor_1');
+    this.floor.setOrigin(0.5, 1);
+    this.floor.setOffset(0, 0);
     this.nextBall = 0;
   }
 

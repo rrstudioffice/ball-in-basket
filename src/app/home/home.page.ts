@@ -7,6 +7,8 @@ import { GameScene } from './scenes/game';
 import { BootScene } from './scenes/boot';
 import { BoxScene } from './scenes/box';
 
+import { Platform } from '@ionic/angular';
+
 import * as Phaser from 'phaser';
 
 @Component({
@@ -20,16 +22,13 @@ export class HomePage implements OnInit, OnDestroy {
   storage: StorageService;
   game: Phaser.Game;
 
-  constructor() {
+  constructor(private plt: Platform) {
     this.config = {
       type: Phaser.AUTO,
-      width: 1000,
-      height: 700,
+      width: this.plt.width(),
+      height: this.plt.height(),
       parent: 'gameContainer',
-      scale: {
-        mode: Phaser.Scale.FIT,
-        autoCenter: Phaser.Scale.CENTER_BOTH
-      },
+      scale: { mode: Phaser.Scale.FIT, autoCenter: Phaser.Scale.CENTER_BOTH },
       physics: {
         default: 'arcade',
         // arcade: { debug: true }
@@ -42,8 +41,9 @@ export class HomePage implements OnInit, OnDestroy {
   ngOnInit() {
     this.storage.getObject('ball_in_basket').then(value => {
       this.game = new Phaser.Game(this.config);
-      const valueConfig = { nivel: 'easy', level: 1 };
-      this.game.registry.merge(Object.assign(value ? value : valueConfig));
+      this.game.registry.merge(
+        value ? value : Object.assign({ nivel: 'easy', level: 1 })
+      );
     });
   }
 

@@ -13,25 +13,32 @@ export class GameScene extends Phaser.Scene {
   bubble: Phaser.Sound.BaseSound;
   game: Phaser.Game;
 
-  config: { [key: string]: any; };
   worldModel: World;
   player: Player;
   header: Header;
+  level = 1;
   score = 0;
 
   constructor() {
     super({ key: 'game', active: false });
   }
 
+  init(data) {
+    this.level = data.level;
+  }
+
   create() {
+    /**
+     * CASO NIVEL EASY REPETI A FASE
+     * CASO NIVEL MEDIO COMEÇA DO ZERO
+     */
     const w = this.sys.canvas.width;
     const h = this.sys.canvas.height;
     this.physics.world.setBoundsCollision(true);
-    this.physics.world.setBounds(0, 0, w, h - 50);
-    this.config = this.registry.getAll();
-    this.worldModel = new World(this, this.config.level);
-    this.header = new Header(this, this.worldModel.levelGame.balls.amount, this.config.level);
-    this.player = new Player(this, this.config.level);
+    this.physics.world.setBounds(0, 0, w, h);
+    this.worldModel = new World(this, this.level);
+    this.header = new Header(this, this.worldModel.levelGame.balls.amount, this.level);
+    this.player = new Player(this, this.level);
     // CONTROLS
     this.cursors = this.input.keyboard.createCursorKeys();
     // Contato da bola com o CHÃO
@@ -82,28 +89,18 @@ export class GameScene extends Phaser.Scene {
 
   // CONCLUIR A FASE
   private goToBox() {
+    this.registry.set('level', this.level + 1);
     this.score = 0;
-    this.registry.merge({ level: this.config.level + 1 });
-    this.scene.start('box', {
-      pageTitle: 'Level ' + this.config.level,
+    this.scene.start('menu', {
+      pageTitle: 'Level ' + this.level,
       levelFinish: 'Completo!',
-      level: this.config.level + 1
+      level: this.level + 1
     });
-  }
-
-  private async goToMenu() {
-    this.scene.start('menu');
-    this.score = 0;
   }
 
   private gameOver() {
+    this.scene.start('menu', { pageTitle: 'Game Over!', level: this.level });
     this.scene.pause();
     this.score = 0;
-    // SE NIVEL FACIL LEVEL CONTINUA
-    // SE LEVEL MEDIO LEVEL SERA
-    this.scene.start('box', {
-      pageTitle: 'Game Over!',
-      level: this.config.nivel === 'easy' ? this.config.level : 0
-    });
   }
 }

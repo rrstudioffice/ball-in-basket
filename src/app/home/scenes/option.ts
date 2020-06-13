@@ -9,11 +9,13 @@ export class OptionScene extends Phaser.Scene {
   }
 
   create() {
-    const bg = this.add.image(0, 700, 'bg_0');
-    bg.setOrigin(0, 1);
     const width = (this.sys.game.canvas.width / 2);
     const height = (this.sys.game.canvas.height / 2);
-    this.titleText = this.add.text(width, height - 120, 'Nível Fácil', {
+    const bg = this.add.image(width, this.sys.game.canvas.height, 'bg_0');
+    bg.setOrigin(0.5, 1);
+    const nivel = this.registry.get('nivel');
+    this.titleText = this.add.text(width, height - 120,
+      (nivel && nivel === 'medium') ? 'Nível Médio' : 'Nível Fácil', {
       fontFamily: 'Piedra-Regular',
       shadowColor: '#000000',
       strokeThickness: 2,

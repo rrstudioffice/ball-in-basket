@@ -12,19 +12,18 @@ export class PreloaderScene extends Phaser.Scene {
     this.load.setPath('./assets/');
     this.load.audio('music', ['sounds/music.ogg', 'sounds/music.mp3']);
     this.load.audio('bubble', ['sounds/bubble.ogg', 'sounds/bubble.mp3']);
-    // LEVELS
-    this.load.json('level', 'level.json');
     // GUI BUTTONS
     this.load.atlas('btnBlue', 'gui/btnBlue.png', 'gui/btnBlue.json');
-    this.load.atlas('button', 'gui/button.png', 'gui/button.json');
     this.load.atlas('arrow', 'gui/arrow.png', 'gui/arrow.json');
-    // BALLS
-    this.load.atlas('ball', 'balls.png', 'balls.json');
     // PLAYER
     this.load.atlas('baskets', 'baskets.png', 'baskets.json');
+    // BALLS
+    this.load.atlas('ball', 'balls.png', 'balls.json');
+    // LEVELS
+    this.load.json('level', 'level.json');
     // BACKGROUNDS
 
-    this.load.image('logo', 'logo.png');
+    this.load.image('logo', 'logo128.png');
     this.load.image('bg_0', 'bgs/bg_0.png');
     this.load.image('bg_1', 'bgs/bg_1.png');
     this.load.image('floor_1', 'bgs/floor_1.png');
@@ -47,13 +46,5 @@ export class PreloaderScene extends Phaser.Scene {
         this.progressBox.destroy();
       }
     });
-  }
-
-  create() {
-    const width = (this.sys.game.canvas.width / 2);
-    const height = (this.sys.game.canvas.height / 2);
-    const logo = this.add.image(width, height, 'logo');
-    logo.setOrigin(0.5, 0.5);
-    logo.setScale(0.2);
   }
 }
