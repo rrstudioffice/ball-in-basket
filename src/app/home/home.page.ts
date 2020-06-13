@@ -5,7 +5,6 @@ import { OptionScene } from './scenes/option';
 import { MenuScene } from './scenes/menu';
 import { GameScene } from './scenes/game';
 import { BootScene } from './scenes/boot';
-import { BoxScene } from './scenes/box';
 
 import { Platform } from '@ionic/angular';
 
@@ -33,7 +32,7 @@ export class HomePage implements OnInit, OnDestroy {
         default: 'arcade',
         // arcade: { debug: true }
       },
-      scene: [BootScene, PreloaderScene, MenuScene, BoxScene, OptionScene, GameScene]
+      scene: [BootScene, PreloaderScene, MenuScene, OptionScene, GameScene]
     };
     this.storage = new StorageService();
   }
