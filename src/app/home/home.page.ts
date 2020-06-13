@@ -42,8 +42,8 @@ export class HomePage implements OnInit, OnDestroy {
   ngOnInit() {
     this.storage.getObject('ball_in_basket').then(value => {
       this.game = new Phaser.Game(this.config);
-      const objGame = value;
-      this.game.registry.merge(Object.assign(objGame));
+      const valueConfig = { nivel: 'easy', level: 1 };
+      this.game.registry.merge(Object.assign(value ? value : valueConfig));
     });
   }
 

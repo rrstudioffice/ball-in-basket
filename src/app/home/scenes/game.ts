@@ -13,12 +13,11 @@ export class GameScene extends Phaser.Scene {
   bubble: Phaser.Sound.BaseSound;
   game: Phaser.Game;
 
+  config: { [key: string]: any; };
   worldModel: World;
   player: Player;
   header: Header;
-
   score = 0;
-  config: { [key: string]: any; };
 
   constructor() {
     super({ key: 'game', active: false });
@@ -39,6 +38,7 @@ export class GameScene extends Phaser.Scene {
     this.physics.add.overlap(this.worldModel.balls, this.worldModel.floor, this.gameOver, null, this);
     // CONTATO DA BOLA COM A CESTA
     this.physics.add.overlap(this.player.baskets, this.worldModel.balls, this.collectBall, null, this);
+    this.player.setfixedMovementMobile();
   }
 
   collectBall(basket: Basket, ball: Ball) {
@@ -71,11 +71,10 @@ export class GameScene extends Phaser.Scene {
     this.worldModel.update(time);
     if (this.player.getData('notMoving')) {
       // this.playerModel.setVelocity(0);
+      // TECLADO
       if (this.cursors.left.isDown) {
-        // this.worldModel.x -= 10;
         this.player.setfixedMovement(64, 'left');
       } else if (this.cursors.right.isDown) {
-        // this.worldModel.x += 10;
         this.player.setfixedMovement(64, 'right');
       }
     }
@@ -100,9 +99,11 @@ export class GameScene extends Phaser.Scene {
   private gameOver() {
     this.scene.pause();
     this.score = 0;
+    // SE NIVEL FACIL LEVEL CONTINUA
+    // SE LEVEL MEDIO LEVEL SERA
     this.scene.start('box', {
       pageTitle: 'Game Over!',
-      level: this.config.level
+      level: this.config.nivel === 'easy' ? this.config.level : 0
     });
   }
 }

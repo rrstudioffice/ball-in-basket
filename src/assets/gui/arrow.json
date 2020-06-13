@@ -1,0 +1,16 @@
+{
+  "height": 64,
+  "width": 194,
+  "tileheight": 64,
+  "tilewidth": 64,
+  "frames": [
+    {
+      "filename": "btn",
+      "frame": { "x": 0, "y": 0, "w": 64, "h": 64 }
+    },
+    {
+      "filename": "btn_active",
+      "frame": { "x": 64, "y": 0, "w": 64, "h": 64 }
+    }
+  ]
+}

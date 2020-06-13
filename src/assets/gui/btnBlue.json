@@ -1,0 +1,20 @@
+{
+  "height": 166,
+  "width": 200,
+  "tileheight": 55,
+  "tilewidth": 200,
+  "frames": [
+    {
+      "filename": "btn",
+      "frame": { "x": 0, "y": 0, "w": 200, "h": 55 }
+    },
+    {
+      "filename": "btn_over",
+      "frame": { "x": 0, "y": 55, "w": 200, "h": 55 }
+    },
+    {
+      "filename": "btn_active",
+      "frame": { "x": 0, "y": 110, "w": 200, "h": 55 }
+    }
+  ]
+}

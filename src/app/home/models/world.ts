@@ -2,7 +2,6 @@ import * as Phaser from 'phaser';
 import { Ball } from './ball';
 
 import { IMap, IMapLevel } from '../interface';
-import { Background } from './background';
 
 export class World extends Phaser.GameObjects.Image {
   private lines: any[] = [];
@@ -18,15 +17,15 @@ export class World extends Phaser.GameObjects.Image {
     super(scene, 0, 0, 'bg_1');
     scene.add.existing(this);
     this.setOrigin(0, 0);
-    const w = scene.sys.canvas.width / 2;
-    const h = scene.sys.canvas.height;
-    this.mapLevel = scene.cache.json.get('level');
+    const w = this.scene.sys.canvas.width / 2;
+    const h = this.scene.sys.canvas.height;
+    this.mapLevel = this.scene.cache.json.get('level');
     this.levelGame = this.mapLevel.levels[nLvl];
     // BALLS
-    this.balls = scene.physics.add.group({ classType: Ball, runChildUpdate: true });
+    this.balls = this.scene.physics.add.group({ classType: Ball, runChildUpdate: true });
 
     // FLOOR
-    this.floor = scene.physics.add.staticSprite(1050 / 2, 595, 'floor_1');
+    this.floor = this.scene.physics.add.staticSprite(1050 / 2, 595, 'floor_1');
     this.floor.setOffset(0, 80);
     this.lines = [w - 128, w - 64, w, w + 64, w + 128];
     this.nextBall = 0;

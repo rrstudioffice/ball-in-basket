@@ -11,13 +11,9 @@ export interface IConfigButton {
 }
 export class Button extends Phaser.GameObjects.Sprite {
   label: Phaser.GameObjects.Text;
-  options = {
-    fontSize: '28px',
-    color: '#FFFFFF',
-    fontFamily: 'Piedra-Regular'
-  };
+  options = { fontSize: '28px', color: '#FFFFFF', fontFamily: 'Piedra-Regular' };
   constructor(config: IConfigButton) {
-    super(config.scene, config.x, config.y, 'button', 'btn');
+    super(config.scene, config.x, config.y, 'btnBlue', 'btn');
     this.setOrigin(0.5, 0.5);
     this
       .setInteractive({ useHandCursor: true })
@@ -39,7 +35,7 @@ export class Button extends Phaser.GameObjects.Sprite {
   }
 
   initBtn(txt) {
-    this.label = this.scene.add.text(this.x, this.y, txt, this.options);
+    this.label = this.scene.add.text(this.x, this.y - 1, txt, this.options);
     this.label.setOrigin(0.5, 0.5);
   }
 }
