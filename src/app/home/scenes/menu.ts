@@ -20,8 +20,6 @@ export class MenuScene extends Phaser.Scene {
   }
 
   init(data) {
-    const storage = new StorageService();
-    storage.setObject('ball_in_basket', { level: data.level });
     this.pageTitle = data.pageTitle;
     this.finish = data.levelFinish;
     this.level = data.level;
@@ -32,6 +30,21 @@ export class MenuScene extends Phaser.Scene {
     const h = (this.sys.game.canvas.height / 2);
     const bg = this.add.image(w, this.sys.game.canvas.height, 'bg_0');
     bg.setOrigin(0.5, 1);
+
+    // ===================== MUDANÇA DE FASE OU GAME OVER ==========================
+    // TITULO DA PAGINA - Se houver
+    const titleText = this.add.text(w, h - 160, this.pageTitle,
+      Object.assign(this.options, { fontSize: '42px' }),
+    );
+    titleText.setOrigin(0.5, 0.5);
+    this.add.existing(titleText);
+
+    // FASE COMPLETA - Se houver
+    const finishText = this.add.text(w, h - 120, this.finish,
+      Object.assign(this.options, { fontSize: '28px' })
+    );
+    finishText.setOrigin(0.5, 0.5);
+    this.add.existing(finishText);
 
     // NOME DO JOGO
     const gameText = this.add.text(w, h - 60, 'BALL IN BASKET', {
@@ -46,8 +59,16 @@ export class MenuScene extends Phaser.Scene {
 
     // ================================= BUTTONS ==================================
     /** JOGAR */
+
     const btnPlayAgain = new Button({
-      callback: () => this.scene.start('game', { level: this.level || 1 }),
+      callback: () => {
+        const storage = new StorageService();
+        storage.setObject('ball_in_basket', {
+          nivel: this.registry.get('nivel'),
+          level: this.level || 1
+        });
+        this.scene.start('game', { level: this.level || 1 });
+      },
       y: h, txt: 'Jogar', scene: this, x: w,
     });
 
@@ -56,21 +77,5 @@ export class MenuScene extends Phaser.Scene {
       callback: () => this.scene.start('option'),
       txt: 'Opções', scene: this, y: h + 60, x: w,
     });
-
-    // ===================== MUDANÇA DE FASE OU GAME OVER ==========================
-    // TITULO DA PAGINA - Se houver
-    const titleText = this.add.text(w, h + 120, this.pageTitle,
-      Object.assign(this.options, { fontSize: '42px' }),
-    );
-    titleText.setOrigin(0.5, 0.5);
-    this.add.existing(titleText);
-
-    // FASE COMPLETA - Se houver
-    const finishText = this.add.text(w, h + 160, this.finish,
-      Object.assign(this.options, { fontSize: '28px' })
-    );
-    finishText.setOrigin(0.5, 0.5);
-    this.add.existing(finishText);
-
   }
 }

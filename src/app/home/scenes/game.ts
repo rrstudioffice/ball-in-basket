@@ -5,12 +5,14 @@ import { World } from '../models/world';
 import { Ball } from '../models/ball';
 
 import * as Phaser from 'phaser';
+import { StorageService } from '../services/storage.service';
 
 export class GameScene extends Phaser.Scene {
   cursors: Phaser.Types.Input.Keyboard.CursorKeys;
   gameOverText: Phaser.GameObjects.Text;
   scoreText: Phaser.GameObjects.Text;
   bubble: Phaser.Sound.BaseSound;
+  storage: StorageService;
   game: Phaser.Game;
 
   worldModel: World;
@@ -24,6 +26,7 @@ export class GameScene extends Phaser.Scene {
   }
 
   init(data) {
+    this.storage = new StorageService();
     this.level = data.level;
   }
 
@@ -90,6 +93,10 @@ export class GameScene extends Phaser.Scene {
   // CONCLUIR A FASE
   private goToBox() {
     this.registry.set('level', this.level + 1);
+    this.storage.setObject('ball_in_basket', {
+      nivel: this.registry.get('nivel'),
+      level: this.level + 1,
+    });
     this.score = 0;
     this.scene.start('menu', {
       pageTitle: 'Level ' + this.level,

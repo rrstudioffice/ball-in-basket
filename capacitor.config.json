@@ -1,7 +1,9 @@
 {
-  "appId": "io.ionic.starter",
+  "appId": "com.rrstudioffice.bib",
   "appName": "Ball in Basket",
   "bundledWebRuntime": false,
+  "versionName": "1.0.1",
+  "versionCode": 5,
   "npmClient": "npm",
   "webDir": "www",
   "plugins": {

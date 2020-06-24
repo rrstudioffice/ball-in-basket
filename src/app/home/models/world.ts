@@ -7,22 +7,26 @@ export class World extends Phaser.GameObjects.Image {
   private lines: any[] = [];
   private nextBall: number;
   private mapLevel: IMap;
+  // VARIAVEIS INICIADAS
+  private baseTime = 3700;
+  private baseSpeed = 170;
   // PUBLICS
   floor: Phaser.Physics.Arcade.Sprite;
   balls: Phaser.Physics.Arcade.Group;
-  levelGame: IMapLevel;
   bg: Phaser.GameObjects.TileSprite;
+  levelGame: IMapLevel;
 
   constructor(scene: Phaser.Scene, nLvl: number) {
     super(scene, 0, 0, 'bg_1');
     scene.add.existing(this);
     const w = this.scene.sys.canvas.width / 2;
     const h = this.scene.sys.canvas.height;
-    this.setOrigin(0.5, 1);
-    this.setPosition(w, h);
     this.lines = [w - 128, w - 64, w, w + 64, w + 128];
     this.mapLevel = this.scene.cache.json.get('level');
     this.levelGame = this.mapLevel.levels[nLvl];
+    this.setOrigin(0.5, 1);
+    this.setPosition(w, h);
+
     // BALLS
     this.balls = this.scene.physics.add.group({ classType: Ball, runChildUpdate: true });
 
@@ -41,7 +45,7 @@ export class World extends Phaser.GameObjects.Image {
     if (time > this.nextBall) {
       const ball: Ball = this.balls.get();
       // Velocidade da bola
-      ball.setVelocityY(this.levelGame.velocity);
+      ball.setVelocityY(this.baseSpeed);
       // Onde ela inicia
       const line = Phaser.Utils.Array.GetRandom(this.levelGame.balls.lines);
       ball.setX(this.lines[line]);
@@ -52,7 +56,7 @@ export class World extends Phaser.GameObjects.Image {
         ball.setActive(true);
         ball.setVisible(true);
         // Tempo da próxima bola
-        this.nextBall = time + this.levelGame.time;
+        this.nextBall = time + this.baseTime;
       }
     }
   }

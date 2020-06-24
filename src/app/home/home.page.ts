@@ -23,22 +23,23 @@ export class HomePage implements OnInit, OnDestroy {
 
   constructor(private plt: Platform) {
     this.config = {
-      type: Phaser.AUTO,
-      width: this.plt.width(),
-      height: this.plt.height(),
-      parent: 'gameContainer',
       scale: { mode: Phaser.Scale.FIT, autoCenter: Phaser.Scale.CENTER_BOTH },
+      scene: [BootScene, PreloaderScene, MenuScene, OptionScene, GameScene],
+      height: this.plt.height(),
+      width: this.plt.width(),
+      parent: 'gameContainer',
+      type: Phaser.AUTO,
       physics: {
         default: 'arcade',
         // arcade: { debug: true }
       },
-      scene: [BootScene, PreloaderScene, MenuScene, OptionScene, GameScene]
     };
     this.storage = new StorageService();
   }
 
   ngOnInit() {
     this.storage.getObject('ball_in_basket').then(value => {
+      console.log(value);
       this.game = new Phaser.Game(this.config);
       this.game.registry.merge(
         value ? value : Object.assign({ nivel: 'easy', level: 1 })

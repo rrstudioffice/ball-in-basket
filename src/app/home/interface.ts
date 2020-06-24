@@ -13,7 +13,5 @@ export interface IMapLevel {
     lines: number[];
     amount: number
   };
-  velocity: number;
-  time: number;
 }
 
